@@ -1,5 +1,5 @@
 from imaplib import Flags
-from symbol import power
+
 
 from board import boards  # import boards từ thư viện board
 import pygame
@@ -19,18 +19,41 @@ level = boards  # 32 hàng và 30 cột, boards[active_level] khi cập nhật c
 color = 'blue'  # có thể đổi màu sắc theo từng level
 PI = math.pi  # hằng số pi dùng để tính toán các góc trong hình học tròn, trong trường hợp này, PI giúp xác định góc khi làm việc với cung, đường tròn
 
+#Thêm âm thanh 
+
+pygame.mixer.init()
+
+# Load sounds using absolute paths
+pacman_beginning = pygame.mixer.Sound(r"C:\Users\ThinkPad\Pacman_BTL\assets\sounds\pacman_beginning.wav")
+pacman_munch = pygame.mixer.Sound(r"C:\Users\ThinkPad\Pacman_BTL\assets\sounds\pacman_chomp.wav")
+eating_fruit = pygame.mixer.Sound(r"C:\Users\ThinkPad\Pacman_BTL\assets\sounds\pacman_eatfruit.wav")
+eating_ghost = pygame.mixer.Sound(r"C:\Users\ThinkPad\Pacman_BTL\assets\sounds\pacman_eatghost.wav")
+extra_man = pygame.mixer.Sound(r"C:\Users\ThinkPad\Pacman_BTL\assets\sounds\pacman_extrapac.wav")
+intermission = pygame.mixer.Sound(r"C:\Users\ThinkPad\Pacman_BTL\assets\sounds\pacman_intermission.wav")
+death = pygame.mixer.Sound(r"C:\Users\ThinkPad\Pacman_BTL\assets\sounds\pacman_death.wav")
+
+
+
+
+
+
+
+
+
+
+
+
 player_images = []
 for i in range(1, 5):
-    player_images.append(pygame.transform.scale(pygame.image.load(f'assets/player_images/{i}.png'), (
-    45, 45)))  # Thêm hình ảnh đã chỉnh kích thước vào danh sách player_images
-blinky_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/red.png'), (45, 45))
-pinky_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/pink.png'), (45, 45))
-inky_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/blue.png'), (45, 45))
-clyde_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/orange.png'), (45, 45))
-spooked_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/powerup.png'), (45, 45))
-dead_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/dead.png'), (45, 45))
+    player_images.append(pygame.transform.scale(pygame.image.load(f'assets/player_images/{i}.png'), (45, 45)))  # Thêm hình ảnh đã chỉnh kích thước vào danh sách player_images
+    blinky_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/red.png'), (45, 45))
+    pinky_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/pink.png'), (45, 45))
+    inky_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/blue.png'), (45, 45))
+    clyde_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/orange.png'), (45, 45))
+    spooked_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/powerup.png'), (45, 45))
+    dead_img = pygame.transform.scale(pygame.image.load(f'assets/ghost_images/dead.png'), (45, 45))
 
-# Tọa độ hiện tại của nhân vật - khi thay đổi kích thước cần tính toán lại cái này
+    # Tọa độ hiện tại của nhân vật - khi thay đổi kích thước cần tính toán lại cái này
 player_x = 450
 player_y = 663
 direction = 0 # hướng di chuyển, 0-RIGHT, 1- trái, 2 lên, 3 xuống
@@ -450,6 +473,9 @@ def check_position(centerx, centery):
 
     return turns
 
+
+#phát âm thanh khi bắt đầu chơi
+pacman_beginning.play()
 
 run = True
 while run:
